@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  front:
+    build:
+      context: .
+      dockerfile: ./docker/front.dockerfile
+    volumes:
+    - ./apps/student-registration:/app/apps/student-registration
+    - ./libs/api-interfaces:/app/libs/api-interfaces
+
+    ports:
+      - "4200:4200"
