@@ -10,3 +10,14 @@ services:
 
     ports:
       - "4200:4200"
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: ./docker/api-gateway.dockerfile
+    volumes:
+      - ./apps/api/api-gateway:/app/apps/api/api-gateway
+      - ./apps/api/dto:/app/apps/api/dto
+    command: sh -c "cd apps/api/api-gateway && yarn start:dev"
+    ports:
+      - "3000:3000"
