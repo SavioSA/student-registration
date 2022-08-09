@@ -20,11 +20,11 @@ COPY ./apps/api/project.json ./apps/api/project.json
 
 COPY ./nx.json ./nx.json
 
-COPY ./apps/api/api-gateway ./apps/api/api-gateway
+COPY ./apps/api/student-registration ./apps/api/student-registration
 
 RUN yarn add @nestjs/core
 
-RUN cd apps/api/api-gateway
+RUN cd apps/api/student-registration
 
 RUN yarn add @nestjs/microservices
 

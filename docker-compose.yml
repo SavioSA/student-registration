@@ -21,3 +21,14 @@ services:
     command: sh -c "cd apps/api/api-gateway && yarn start:dev"
     ports:
       - "3000:3000"
+
+  api-student-registration:
+    build:
+      context: .
+      dockerfile: ./docker/student-registration.dockerfile
+    volumes:
+      - ./apps/api/student-registration:/app/apps/api/student-registration
+      - ./apps/api/dto:/app/apps/api/dto
+    command: sh -c "cd apps/api/student-registration && yarn start:dev"
+    ports:
+      - "3001:3000"
