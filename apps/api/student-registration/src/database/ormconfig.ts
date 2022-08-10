@@ -1,6 +1,8 @@
 import { join } from 'path';
 import { DataSource } from 'typeorm';
 
+console.log(__dirname);
+
 const dataSource = new DataSource({
   type: 'postgres',
   port: parseInt(process.env.MYSQL_PORT as string, 10),
@@ -12,7 +14,7 @@ const dataSource = new DataSource({
   synchronize: false,
   name: 'default',
   entities: [join(__dirname, '/entities/**')],
-  migrations: [join(__dirname, '/entities/**')],
+  migrations: [join(__dirname, '/migrations/**')],
   subscribers: ['dist/src/database/subscriber/**'],
 });
 
