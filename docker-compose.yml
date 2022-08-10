@@ -15,13 +15,19 @@ services:
     hostname: ${POSTGRES_HOSTNAME}
     image: postgres:14.1-alpine
     restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DATABASE=${POSTGRES_DATABASE}
     ports:
       - '5432:5432'
     volumes:
-      - postgres:/var/lib/postgresql/data
+      - db-data:/var/lib/postgresql/data
 
   api-gateway:
     hostname:  ${API_GATEWAY_HOSTNAME}
@@ -44,8 +50,11 @@ services:
     environment:
       - API_GATEWAY_HOSTNAME=${API_GATEWAY_HOSTNAME}
       - API_GATEWAY_PORT=${API_GATEWAY_PORT}
-      - HOSTNAME= ${STUDENT_REGISTRATION_SERVICE_HOSTNAME}
-      - PORT=${STUDENT_REGISTRATION_SERVICE_PORT}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_HOSTNAME=${POSTGRES_HOSTNAME}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_DATABASE=${POSTGRES_DATABASE}
     build:
       context: .
       dockerfile: ./docker/student-registration.dockerfile
@@ -59,5 +68,5 @@ services:
       - ${STUDENT_REGISTRATION_SERVICE_PORT}
 
 volumes:
-  postgres:
+  db-data:
     driver: local
