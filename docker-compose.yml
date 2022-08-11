@@ -1,16 +1,5 @@
 version: "3.9"
 services:
-  front:
-    build:
-      context: .
-      dockerfile: ./docker/front.dockerfile
-    volumes:
-    - ./apps/student-registration:/app/apps/student-registration
-    - ./libs/api-interfaces:/app/libs/api-interfaces
-
-    ports:
-      - "4200:4200"
-
   postgres:
     hostname: ${POSTGRES_HOSTNAME}
     image: postgres:14.1-alpine
@@ -29,6 +18,23 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
+  redis:
+    hostname: redis
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+
+  front:
+    build:
+      context: .
+      dockerfile: ./docker/front.dockerfile
+    volumes:
+    - ./apps/student-registration:/app/apps/student-registration
+    - ./libs/api-interfaces:/app/libs/api-interfaces
+
+    ports:
+      - "4200:4200"
+
   api-gateway:
     hostname:  ${API_GATEWAY_HOSTNAME}
     build:
@@ -44,6 +50,8 @@ services:
     command: sh -c "cd apps/api/api-gateway && yarn start:dev"
     ports:
       - "${API_GATEWAY_PORT}:${API_GATEWAY_PORT}"
+    expose:
+      - ${API_GATEWAY_PORT}
 
   student-registration-service:
     hostname: ${STUDENT_REGISTRATION_SERVICE_HOSTNAME}
@@ -55,6 +63,7 @@ services:
       - POSTGRES_HOSTNAME=${POSTGRES_HOSTNAME}
       - POSTGRES_PORT=${POSTGRES_PORT}
       - POSTGRES_DATABASE=${POSTGRES_DATABASE}
+      - PORT=${STUDENT_REGISTRATION_SERVICE_PORT}
     build:
       context: .
       dockerfile: ./docker/student-registration.dockerfile
