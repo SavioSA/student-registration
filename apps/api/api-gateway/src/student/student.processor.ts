@@ -1,5 +1,5 @@
 import { OnQueueActive, Process, Processor } from '@nestjs/bull';
-import { Inject } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { DoneCallback, Job } from 'bull';
 import { lastValueFrom } from 'rxjs';
@@ -15,16 +15,16 @@ export class StudentProcessor {
     console.log(`Processing job ${job.id} of type ${job.name}...`);
   }
   @Process('create-student')
-  async createStudent(job: Job, DoneCallback: DoneCallback) {
+  async createStudent(job: Job, doneCallback: DoneCallback) {
     try {
       const result = this.studentRegistrationService.send<string>(
         { cmd: 'test' },
         job.data,
       );
-      DoneCallback(null, await lastValueFrom(result));
+      doneCallback(null, await lastValueFrom(result));
     } catch (error) {
-      DoneCallback(error, null);
-      console.log(error);
+      doneCallback(error, null);
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }

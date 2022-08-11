@@ -1,26 +1,24 @@
 import { InjectQueue, OnQueueCompleted } from '@nestjs/bull';
-import { Inject, Injectable } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
+import { Injectable } from '@nestjs/common';
 import { Job } from 'bull';
+import { Response } from 'express';
 import CreateStudentDto from '../../../dto/create-student.dto';
 
 @Injectable()
 export class StudentService {
-  constructor(
-    @InjectQueue('student-queue') private studentQueue,
-    @Inject('STUDENT_REGISTRATION')
-    private readonly studentRegistrationService: ClientProxy,
-  ) {}
+  constructor(@InjectQueue('student-queue') private studentQueue) {}
 
-  async createStudent(createStudentDto: CreateStudentDto) {
+  async createStudent(createStudentDto: CreateStudentDto, res: Response) {
     try {
       const job: Job = await this.studentQueue.add(
         'create-student',
         createStudentDto,
       );
-      return await job.finished();
+
+      await job.finished();
+      console.log(job.isFailed());
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
