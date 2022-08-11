@@ -1,8 +1,6 @@
 import { join } from 'path';
 import { DataSource } from 'typeorm';
 
-console.log(__dirname);
-
 const dataSource = new DataSource({
   type: 'postgres',
   port: parseInt(process.env.MYSQL_PORT as string, 10),

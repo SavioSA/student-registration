@@ -12,15 +12,10 @@ export default class Student {
   @PrimaryGeneratedColumn()
   code: number;
 
-  @Column({
-    length: 50,
-  })
-  description: string;
-
   @Column()
-  menu: string;
+  name: string;
 
-  @ManyToMany(() => Course)
-  @JoinTable({ name: 'course_student' })
-  students;
+  @ManyToMany(() => Course, (course) => course.students, { nullable: true })
+  @JoinTable({ name: 'course-student' })
+  courses?: Course[];
 }
