@@ -1,21 +1,34 @@
+import { InjectQueue, OnQueueCompleted } from '@nestjs/bull';
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { map } from 'rxjs/operators';
+import { Job } from 'bull';
 import CreateStudentDto from '../../../dto/create-student.dto';
 
 @Injectable()
 export class StudentService {
   constructor(
+    @InjectQueue('student-queue') private studentQueue,
     @Inject('STUDENT_REGISTRATION')
-    private readonly clientServiceA: ClientProxy,
+    private readonly studentRegistrationService: ClientProxy,
   ) {}
 
-  createStudent(createStudentDto: CreateStudentDto) {
-    const startTs = Date.now();
-    return this.clientServiceA
-      .send<string>({ cmd: 'test' }, createStudentDto)
-      .pipe(
-        map((message: string) => ({ message, duration: Date.now() - startTs })),
+  async createStudent(createStudentDto: CreateStudentDto) {
+    try {
+      const job: Job = await this.studentQueue.add(
+        'create-student',
+        createStudentDto,
       );
+      return await job.finished();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  @OnQueueCompleted({
+    name: 'student-queue',
+  })
+  taskDone(job: Job, result: any) {
+    console.log('9999999999');
+    return result;
   }
 }
