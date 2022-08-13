@@ -8,7 +8,7 @@ const dataSource = new DataSource({
   username: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DATABASE,
-  logging: true,
+  logging: ['query', 'error'],
   synchronize: false,
   name: 'default',
   entities: [join(__dirname, '/entities/**')],
