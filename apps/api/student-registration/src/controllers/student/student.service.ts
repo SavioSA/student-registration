@@ -1,7 +1,7 @@
-import { Inject, Injectable } from '@nestjs/common';
-import Student from 'src/database/entities/student.entity';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import CreateStudentDto from '../../../../dto/create-student.dto';
+import Student from '../../database/entities/student.entity';
 
 @Injectable()
 export class StudentService {
@@ -11,15 +11,10 @@ export class StudentService {
   ) {}
 
   async createStudent(createStudentDto: CreateStudentDto) {
-    const student: Student = new Student();
-    student.name = createStudentDto.name;
-    student.courses = [
-      {
-        description: 'dasdasd',
-        menu: 'asdasdsad',
-        code: 1,
-      },
-    ];
-    await this.studentRepository.save(student);
+    try {
+      return await this.studentRepository.save(createStudentDto);
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }

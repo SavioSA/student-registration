@@ -17,11 +17,12 @@ export class StudentProcessor {
   @Process('create-student')
   async createStudent(job: Job, doneCallback: DoneCallback) {
     try {
-      const result = this.studentRegistrationService.send<string>(
-        { cmd: 'test' },
+      const query = this.studentRegistrationService.send<string>(
+        { role: 'student', action: 'create' },
         job.data,
       );
-      doneCallback(null, await lastValueFrom(result));
+      const result = await lastValueFrom(query);
+      doneCallback(null, result);
     } catch (error) {
       doneCallback(error, null);
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);

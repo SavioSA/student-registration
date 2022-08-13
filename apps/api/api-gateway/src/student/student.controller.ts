@@ -4,10 +4,8 @@ import {
   Controller,
   HttpException,
   HttpStatus,
-  Post,
-  Res
+  Post
 } from '@nestjs/common';
-import { Response } from 'express';
 import CreateStudentDto from '../../../dto/create-student.dto';
 import { StudentService } from './student.service';
 @Controller('/api/v1/student')
@@ -17,12 +15,9 @@ export class StudentController {
     @InjectQueue('student-queue') private studentQueue,
   ) {}
   @Post('/')
-  async createStudent(
-    @Res() res: Response,
-    @Body() createStudentDto: CreateStudentDto,
-  ) {
+  async createStudent(@Body() createStudentDto: CreateStudentDto) {
     try {
-      return await this.studentService.createStudent(createStudentDto, res);
+      return await this.studentService.createStudent(createStudentDto);
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }

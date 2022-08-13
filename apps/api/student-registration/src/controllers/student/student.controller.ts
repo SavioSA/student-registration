@@ -5,10 +5,8 @@ import { StudentService } from './student.service';
 @Controller()
 export class StudentController {
   constructor(private readonly studentService: StudentService) {}
-  @MessagePattern({ cmd: 'test' })
+  @MessagePattern({ role: 'student', action: 'create' })
   createStudent(createStudentDto: CreateStudentDto) {
-    console.log('ss');
-
-    this.studentService.createStudent(createStudentDto);
+    return this.studentService.createStudent(createStudentDto);
   }
 }
