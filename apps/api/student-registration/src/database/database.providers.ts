@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import Student from './entities/course.entity';
+import Student from './entities/student.entity';
 import dataSource from './ormconfig';
 
 export const databaseProviders = [
