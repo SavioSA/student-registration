@@ -9,10 +9,11 @@ export class StudentService {
 
   async createStudent(createStudentDto: CreateStudentDto) {
     try {
-      const job: Job = await this.studentQueue.add(
-        'create-student',
-        createStudentDto,
-      );
+      const message = { role: 'student', action: 'create' };
+      const job: Job = await this.studentQueue.add('process-request', {
+        message,
+        dto: createStudentDto,
+      });
       await job.finished();
       const { returnvalue } = await this.studentQueue.getJobFromId(job.id);
       return returnvalue;

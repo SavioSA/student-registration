@@ -14,13 +14,14 @@ export class StudentProcessor {
   onActive(job: Job) {
     console.log(`Processing job ${job.id} of type ${job.name}...`);
   }
-  @Process('create-student')
+  @Process('process-request')
   async createStudent(job: Job, doneCallback: DoneCallback) {
     try {
       const query = this.studentRegistrationService.send<string>(
-        { role: 'student', action: 'create' },
-        job.data,
+        job.data.message,
+        job.data.dto,
       );
+
       const result = await lastValueFrom(query);
       doneCallback(null, result);
     } catch (error) {
