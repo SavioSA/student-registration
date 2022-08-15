@@ -6,7 +6,18 @@ import { StudentService } from './student.service';
 export class StudentController {
   constructor(private readonly studentService: StudentService) {}
   @MessagePattern({ role: 'student', action: 'create' })
-  createStudent(createStudentDto: CreateStudentDto) {
-    return this.studentService.createStudent(createStudentDto);
+  createStudent(requestData: { createStudentDto: CreateStudentDto }) {
+    return this.studentService.createStudent(requestData.createStudentDto);
+  }
+
+  @MessagePattern({ role: 'student', action: 'update' })
+  updateStudent(requestData: {
+    code: number;
+    createStudentDto: CreateStudentDto;
+  }) {
+    return this.studentService.updateStudent(
+      requestData.code,
+      requestData.createStudentDto,
+    );
   }
 }

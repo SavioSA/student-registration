@@ -1,12 +1,14 @@
 import {
   Body,
   Controller,
-  HttpException,
-  HttpStatus,
+  Param,
   Post,
+  Put,
+  UseFilters,
   UsePipes,
   ValidationPipe
 } from '@nestjs/common';
+import { HttpExceptionFilter } from 'utils/http-exception.filter';
 import CreateStudentDto from '../../../dto/create-student.dto';
 import { StudentService } from './student.service';
 @Controller('/api/v1/student')
@@ -15,10 +17,14 @@ export class StudentController {
   constructor(private readonly studentService: StudentService) {}
   @Post('/')
   async createStudent(@Body() createStudentDto: CreateStudentDto) {
-    try {
-      return await this.studentService.createStudent(createStudentDto);
-    } catch (error) {
-      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+    return await this.studentService.createStudent(createStudentDto);
+  }
+  @UseFilters(new HttpExceptionFilter())
+  @Put('/:code')
+  async updateStudent(
+    @Body() createStudentDto: CreateStudentDto,
+    @Param('code') code: number,
+  ) {
+    return await this.studentService.updateStudent(code, createStudentDto);
   }
 }

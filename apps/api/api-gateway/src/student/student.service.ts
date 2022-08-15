@@ -1,5 +1,5 @@
-import { InjectQueue, OnQueueCompleted } from '@nestjs/bull';
-import { Injectable } from '@nestjs/common';
+import { InjectQueue } from '@nestjs/bull';
+import { HttpException, Injectable } from '@nestjs/common';
 import { Job } from 'bull';
 import CreateStudentDto from '../../../dto/create-student.dto';
 
@@ -7,26 +7,44 @@ import CreateStudentDto from '../../../dto/create-student.dto';
 export class StudentService {
   constructor(@InjectQueue('student-queue') private studentQueue) {}
 
+  async waitJobProcess(job: Job) {
+    await job.finished();
+    const { returnvalue } = await this.studentQueue.getJobFromId(job.id);
+    if (returnvalue.error) {
+      const { error } = returnvalue;
+      console.log(error);
+
+      throw new HttpException(error.message, error.status);
+    } else {
+      return returnvalue;
+    }
+  }
+
   async createStudent(createStudentDto: CreateStudentDto) {
     try {
-      const message = { role: 'student', action: 'create' };
       const job: Job = await this.studentQueue.add('process-request', {
-        message,
-        dto: createStudentDto,
+        message: { role: 'student', action: 'create' },
+        requestData: { createStudentDto },
       });
-      await job.finished();
-      const { returnvalue } = await this.studentQueue.getJobFromId(job.id);
-      return returnvalue;
+      const result = await this.waitJobProcess(job);
+      return result;
     } catch (error) {
       console.error(error);
     }
   }
 
-  @OnQueueCompleted({
-    name: 'student-queue',
-  })
-  taskDone(job: Job, result: any) {
-    console.log('9999999999');
-    return result;
+  async updateStudent(code: number, createStudentDto: CreateStudentDto) {
+    try {
+      const job: Job = await this.studentQueue.add('process-request', {
+        message: { role: 'student', action: 'update' },
+        requestData: { code, createStudentDto },
+      });
+      const result = await this.waitJobProcess(job);
+      return result;
+    } catch (error) {
+      console.log(error);
+
+      throw new HttpException(error.response, error.status);
+    }
   }
 }
