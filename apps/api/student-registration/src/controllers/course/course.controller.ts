@@ -8,7 +8,7 @@ export class CourseController {
   constructor(private readonly courseService: CourseService) {}
 
   @MessagePattern({ role: 'course', action: 'create' })
-  createCourse(requestData: { createStudentDto: CreateCourseDto }) {
-    return this.courseService.createCourse(requestData.createStudentDto);
+  createCourse(requestData: { createCourseDto: CreateCourseDto }) {
+    return this.courseService.createCourse(requestData.createCourseDto);
   }
 }

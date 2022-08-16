@@ -4,9 +4,12 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { StudentController } from './student/student.controller';
-import { StudentProcessor } from './student/student.processor';
-import { StudentService } from './student/student.service';
+import { CourseController } from './controllers/course/course.controller';
+import { CourseProcessor } from './controllers/course/course.processor';
+import { CourseService } from './controllers/course/course.service';
+import { StudentController } from './controllers/student/student.controller';
+import { StudentProcessor } from './controllers/student/student.processor';
+import { StudentService } from './controllers/student/student.service';
 
 @Module({
   imports: [
@@ -29,10 +32,20 @@ import { StudentService } from './student/student.service';
     }),
     BullModule.registerQueue({
       name: 'student-queue',
-      processors: [join(__dirname, '/student/student.processor')],
+      processors: [join(__dirname, '/controllers/student/student.processor')],
+    }),
+    BullModule.registerQueue({
+      name: 'course-queue',
+      processors: [join(__dirname, '/controllers/course/course.processor')],
     }),
   ],
-  controllers: [AppController, StudentController],
-  providers: [AppService, StudentService, StudentProcessor],
+  controllers: [AppController, StudentController, CourseController],
+  providers: [
+    AppService,
+    StudentService,
+    StudentProcessor,
+    CourseService,
+    CourseProcessor,
+  ],
 })
 export class AppModule {}

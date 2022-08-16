@@ -13,6 +13,7 @@ export class CourseService {
 
   async createCourse(createCourseDto: CreateCourseDto) {
     try {
+      console.log(createCourseDto);
       return await this.courseRepository.save(createCourseDto);
     } catch (error) {
       throw new RpcException(error);
