@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   Param,
   Post,
   Put,
@@ -31,5 +32,10 @@ export class StudentController {
   @Delete('/:code')
   async deleteStudent(@Param('code') code: number) {
     return await this.studentService.deleteStudent(code);
+  }
+
+  @Get('/:code')
+  async getStudent(@Param('code') code: number) {
+    return await this.studentService.getStudent(code);
   }
 }

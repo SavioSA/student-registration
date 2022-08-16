@@ -56,4 +56,17 @@ export class StudentService {
       throw new HttpException(error.response, error.status);
     }
   }
+
+  async getStudent(code: number) {
+    try {
+      const job: Job = await this.studentQueue.add('process-request', {
+        message: { role: 'student', action: 'get' },
+        requestData: { code },
+      });
+      const result = await this.waitJobProcess(job);
+      return result;
+    } catch (error) {
+      throw new HttpException(error.response, error.status);
+    }
+  }
 }

@@ -58,4 +58,23 @@ export class StudentService {
       throw new RpcException(error);
     }
   }
+  async getStudent(code: number) {
+    try {
+      const student = await this.studentRepository.findOne({
+        where: {
+          code,
+        },
+      });
+      if (!student) {
+        throw new RpcException({
+          status: 404,
+          message: 'Student not found.',
+        });
+      } else {
+        return student;
+      }
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
 }

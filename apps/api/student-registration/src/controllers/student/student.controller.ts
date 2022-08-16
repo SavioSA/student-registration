@@ -25,4 +25,9 @@ export class StudentController {
   deleteStudent(requestData: { code: number }) {
     return this.studentService.deleteStudent(requestData.code);
   }
+
+  @MessagePattern({ role: 'student', action: 'get' })
+  getStudent(requestData: { code: number }) {
+    return this.studentService.getStudent(requestData.code);
+  }
 }
