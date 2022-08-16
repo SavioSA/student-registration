@@ -82,9 +82,9 @@ export class CourseService {
     }
   }
 
-  async getAllCourse(offset = 0, page = 0) {
+  async getAllCourse(limit = 0, page = 0) {
     try {
-      const take: number = !offset ? 0 : offset;
+      const take: number = !limit ? 0 : limit;
       let currentPage: number = !page ? 0 : page;
       currentPage = currentPage > 0 ? currentPage - 1 : currentPage;
       const itensPerPage = currentPage * take;
@@ -97,7 +97,7 @@ export class CourseService {
       const courses = coursesSearch[0];
       const coursesTotalCount: number = coursesSearch[1];
       const pagesQuantity: number = Math.ceil(
-        coursesTotalCount / (offset || coursesTotalCount),
+        coursesTotalCount / (limit || coursesTotalCount),
       );
       return { courses, pagesQuantity, totalItems: coursesTotalCount };
     } catch (error) {

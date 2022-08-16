@@ -8,6 +8,7 @@ RUN yarn global add @nestjs/cli
 
 COPY ./package.json ./package.json
 
+
 COPY ./decorate-angular-cli.js ./decorate-angular-cli.js
 
 COPY ./angular.json ./angular.json
@@ -22,10 +23,9 @@ COPY ./nx.json ./nx.json
 
 COPY ./apps/api/student-registration ./apps/api/student-registration
 
-RUN yarn add @nestjs/core
+RUN yarn install
 
 RUN cd apps/api/student-registration
 
-RUN yarn add @nestjs/microservices
 
 CMD [ "yarn", "install"]

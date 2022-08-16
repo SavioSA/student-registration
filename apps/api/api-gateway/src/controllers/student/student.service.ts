@@ -69,11 +69,24 @@ export class StudentService {
       throw new HttpException(error.response, error.status);
     }
   }
-  async getAllStudents(offset: number, page: number) {
+  async getAllStudents(limit: number, page: number) {
     try {
       const job: Job = await this.studentQueue.add('process-request', {
         message: { role: 'student', action: 'get-all' },
-        requestData: { offset, page },
+        requestData: { limit, page },
+      });
+      const result = await this.waitJobProcess(job);
+      return result;
+    } catch (error) {
+      throw new HttpException(error.response, error.status);
+    }
+  }
+
+  async getAllStudentCourses(code: number, limit: number, page: number) {
+    try {
+      const job: Job = await this.studentQueue.add('process-request', {
+        message: { role: 'student', action: 'get-all-courses' },
+        requestData: { code, limit, page },
       });
       const result = await this.waitJobProcess(job);
       return result;

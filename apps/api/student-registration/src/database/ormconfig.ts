@@ -1,5 +1,6 @@
 import { join } from 'path';
 import { DataSource } from 'typeorm';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 const dataSource = new DataSource({
   type: 'postgres',
@@ -14,6 +15,7 @@ const dataSource = new DataSource({
   entities: [join(__dirname, '/entities/**')],
   migrations: [join(__dirname, '/migrations/**')],
   subscribers: ['dist/src/database/subscriber/**'],
+  namingStrategy: new SnakeNamingStrategy(),
 });
 
 export default dataSource;

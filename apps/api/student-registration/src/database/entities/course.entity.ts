@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 import Student from './student.entity';
 
-@Entity()
+@Entity({ name: 'course' })
 export default class Course {
   @PrimaryGeneratedColumn()
   code: number;
@@ -23,8 +23,10 @@ export default class Course {
   @Column()
   menu: string;
 
-  @ManyToMany(() => Student, (student) => student.courses, { nullable: true })
-  @JoinTable({ name: 'course-student' })
+  @ManyToMany(() => Student, { nullable: true })
+  @JoinTable({
+    name: 'course-student',
+  })
   students?: Student[];
 
   @CreateDateColumn({ name: 'created_at' })

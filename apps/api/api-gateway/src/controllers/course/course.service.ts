@@ -71,11 +71,11 @@ export class CourseService {
     }
   }
 
-  async getAllCourses(offset: number, page: number) {
+  async getAllCourses(limit: number, page: number) {
     try {
       const job: Job = await this.courseQueue.add('process-request', {
         message: { role: 'course', action: 'get-all' },
-        requestData: { offset, page },
+        requestData: { limit, page },
       });
       const result = await this.waitJobProcess(job);
       return result;

@@ -46,9 +46,9 @@ export class CourseController {
 
   @Get('/')
   async getAllCourses(
-    @Query('offset') offset: number,
+    @Query('limit') limit: number,
     @Query('page') page: number,
   ) {
-    return await this.courseService.getAllCourses(offset, page);
+    return await this.courseService.getAllCourses(limit, page);
   }
 }

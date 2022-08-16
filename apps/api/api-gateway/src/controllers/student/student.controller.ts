@@ -44,9 +44,18 @@ export class StudentController {
 
   @Get('/')
   async getAllStudents(
-    @Query('offset') offset: number,
+    @Query('limit') limit: number,
     @Query('page') page: number,
   ) {
-    return await this.studentService.getAllStudents(offset, page);
+    return await this.studentService.getAllStudents(limit, page);
+  }
+
+  @Get('/:code/courses/')
+  async getAllStudentCourses(
+    @Param('code') code: number,
+    @Query('limit') limit: number,
+    @Query('page') page: number,
+  ) {
+    return await this.studentService.getAllStudentCourses(code, limit, page);
   }
 }

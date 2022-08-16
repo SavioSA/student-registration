@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
+import Course from 'src/database/entities/course.entity';
 import { Repository } from 'typeorm';
 import CreateStudentDto from '../../../../dto/student/create-student.dto';
 import Student from '../../database/entities/student.entity';
@@ -9,6 +10,8 @@ export class StudentService {
   constructor(
     @Inject('STUDENT_REPOSITORY')
     private studentRepository: Repository<Student>,
+    @Inject('COURSE_REPOSITORY')
+    private courseRepository: Repository<Course>,
   ) {}
 
   async createStudent(createStudentDto: CreateStudentDto) {
@@ -77,9 +80,9 @@ export class StudentService {
       throw new RpcException(error);
     }
   }
-  async getAllStudents(offset = 0, page = 0) {
+  async getAllStudents(limit = 0, page = 0) {
     try {
-      const take: number = !offset ? 0 : offset;
+      const take: number = !limit ? 0 : limit;
       let currentPage: number = !page ? 0 : page;
       currentPage = currentPage > 0 ? currentPage - 1 : currentPage;
       const itensPerPage = currentPage * take;
@@ -92,9 +95,38 @@ export class StudentService {
       const students = studentsSearch[0];
       const studentsTotalCount: number = studentsSearch[1];
       const pagesQuantity: number = Math.ceil(
-        studentsTotalCount / (offset || studentsTotalCount),
+        studentsTotalCount / (limit || studentsTotalCount),
       );
       return { students, pagesQuantity, totalItems: studentsTotalCount };
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async getAllStudentCourses(code: number, limit = 0, page = 0) {
+    try {
+      const take: number = !limit ? 0 : limit;
+      let currentPage: number = !page ? 0 : page;
+      currentPage = currentPage > 0 ? currentPage - 1 : currentPage;
+      const itensPerPage = currentPage * take;
+
+      const student = await this.studentRepository.query(
+        `SELECT *  FROM student as s LEFT JOIN
+        "course-student" as cs ON s.code = cs.student_code LEFT JOIN
+        course as c ON c.code = cs.course_code
+        WHERE student_code = ${code}
+         ${limit > 0 ? `LIMIT ${limit}` : ''}
+         ${page > 0 ? `offset ${page}` : ''};`,
+      );
+
+      if (!student) {
+        throw new RpcException({
+          status: 404,
+          message: 'Student not found.',
+        });
+      } else {
+        return student;
+      }
     } catch (error) {
       throw new RpcException(error);
     }

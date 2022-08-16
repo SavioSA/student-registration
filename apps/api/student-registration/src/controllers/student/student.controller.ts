@@ -32,9 +32,22 @@ export class StudentController {
   }
 
   @MessagePattern({ role: 'student', action: 'get-all' })
-  getAllStudents(requestData: { offset: number; page: number }) {
+  getAllStudents(requestData: { limit: number; page: number }) {
     return this.studentService.getAllStudents(
-      requestData.offset,
+      requestData.limit,
+      requestData.page,
+    );
+  }
+
+  @MessagePattern({ role: 'student', action: 'get-all-courses' })
+  getAllStudentCourses(requestData: {
+    code: number;
+    limit: number;
+    page: number;
+  }) {
+    return this.studentService.getAllStudentCourses(
+      requestData.code,
+      requestData.limit,
       requestData.page,
     );
   }

@@ -22,10 +22,8 @@ COPY ./nx.json ./nx.json
 
 COPY ./apps/api/api-gateway ./apps/api/api-gateway
 
-RUN yarn add @nestjs/core
+RUN yarn install
 
 RUN cd apps/api/api-gateway
-
-RUN yarn add @nestjs/microservices
 
 CMD [ "yarn", "install"]

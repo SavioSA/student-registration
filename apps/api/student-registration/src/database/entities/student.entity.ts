@@ -18,8 +18,10 @@ export default class Student {
   @Column()
   name: string;
 
-  @ManyToMany(() => Course, (course) => course.students, { nullable: true })
-  @JoinTable({ name: 'course-student' })
+  @ManyToMany(() => Course, { nullable: true })
+  @JoinTable({
+    name: 'course-student',
+  })
   courses?: Course[];
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })

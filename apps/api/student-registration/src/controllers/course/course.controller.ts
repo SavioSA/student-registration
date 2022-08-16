@@ -38,10 +38,7 @@ export class CourseController {
   }
 
   @MessagePattern({ role: 'course', action: 'get-all' })
-  getAllCourses(requestData: { offset: number; page: number }) {
-    return this.courseService.getAllCourse(
-      requestData.offset,
-      requestData.page,
-    );
+  getAllCourses(requestData: { limit: number; page: number }) {
+    return this.courseService.getAllCourse(requestData.limit, requestData.page);
   }
 }
