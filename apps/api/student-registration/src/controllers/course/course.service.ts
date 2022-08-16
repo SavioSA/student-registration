@@ -61,4 +61,47 @@ export class CourseService {
       throw new RpcException(error);
     }
   }
+
+  async getCourse(code: number) {
+    try {
+      const course = await this.courseRepository.findOne({
+        where: {
+          code,
+        },
+      });
+      if (!course) {
+        throw new RpcException({
+          status: 404,
+          message: 'Course not found.',
+        });
+      } else {
+        return course;
+      }
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async getAllCourse(offset = 0, page = 0) {
+    try {
+      const take: number = !offset ? 0 : offset;
+      let currentPage: number = !page ? 0 : page;
+      currentPage = currentPage > 0 ? currentPage - 1 : currentPage;
+      const itensPerPage = currentPage * take;
+
+      const coursesSearch = await this.courseRepository.findAndCount({
+        take,
+        skip: itensPerPage,
+      });
+
+      const courses = coursesSearch[0];
+      const coursesTotalCount: number = coursesSearch[1];
+      const pagesQuantity: number = Math.ceil(
+        coursesTotalCount / (offset || coursesTotalCount),
+      );
+      return { courses, pagesQuantity, totalItems: coursesTotalCount };
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
 }

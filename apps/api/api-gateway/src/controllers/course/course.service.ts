@@ -58,28 +58,29 @@ export class CourseService {
     }
   }
 
-  // async getStudent(code: number) {
-  //   try {
-  //     const job: Job = await this.studentQueue.add('process-request', {
-  //       message: { role: 'student', action: 'get' },
-  //       requestData: { code },
-  //     });
-  //     const result = await this.waitJobProcess(job);
-  //     return result;
-  //   } catch (error) {
-  //     throw new HttpException(error.response, error.status);
-  //   }
-  // }
-  // async getAllStudents(offset: number, page: number) {
-  //   try {
-  //     const job: Job = await this.studentQueue.add('process-request', {
-  //       message: { role: 'student', action: 'get-all' },
-  //       requestData: { offset, page },
-  //     });
-  //     const result = await this.waitJobProcess(job);
-  //     return result;
-  //   } catch (error) {
-  //     throw new HttpException(error.response, error.status);
-  //   }
-  // }
+  async getCourse(code: number) {
+    try {
+      const job: Job = await this.courseQueue.add('process-request', {
+        message: { role: 'course', action: 'get' },
+        requestData: { code },
+      });
+      const result = await this.waitJobProcess(job);
+      return result;
+    } catch (error) {
+      throw new HttpException(error.response, error.status);
+    }
+  }
+
+  async getAllCourses(offset: number, page: number) {
+    try {
+      const job: Job = await this.courseQueue.add('process-request', {
+        message: { role: 'course', action: 'get-all' },
+        requestData: { offset, page },
+      });
+      const result = await this.waitJobProcess(job);
+      return result;
+    } catch (error) {
+      throw new HttpException(error.response, error.status);
+    }
+  }
 }

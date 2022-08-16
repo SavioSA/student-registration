@@ -31,4 +31,17 @@ export class CourseController {
   }) {
     return this.courseService.deleteCourse(requestData.code);
   }
+
+  @MessagePattern({ role: 'course', action: 'get' })
+  getCourse(requestData: { code: number }) {
+    return this.courseService.getCourse(requestData.code);
+  }
+
+  @MessagePattern({ role: 'course', action: 'get-all' })
+  getAllCourses(requestData: { offset: number; page: number }) {
+    return this.courseService.getAllCourse(
+      requestData.offset,
+      requestData.page,
+    );
+  }
 }

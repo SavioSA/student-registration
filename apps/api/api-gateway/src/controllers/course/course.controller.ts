@@ -2,9 +2,11 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   Param,
   Post,
   Put,
+  Query,
   UseFilters,
   UsePipes,
   ValidationPipe
@@ -35,5 +37,18 @@ export class CourseController {
   @Delete('/:code')
   async deleteCourse(@Param('code') code: number) {
     return await this.courseService.deleteCourse(code);
+  }
+
+  @Get('/:code')
+  async getCourse(@Param('code') code: number) {
+    return await this.courseService.getCourse(code);
+  }
+
+  @Get('/')
+  async getAllCourses(
+    @Query('offset') offset: number,
+    @Query('page') page: number,
+  ) {
+    return await this.courseService.getAllCourses(offset, page);
   }
 }
