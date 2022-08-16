@@ -1,9 +1,12 @@
 import {
   Column,
+  CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   JoinTable,
   ManyToMany,
-  PrimaryGeneratedColumn
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
 } from 'typeorm';
 import Student from './student.entity';
 
@@ -23,4 +26,13 @@ export default class Course {
   @ManyToMany(() => Student, (student) => student.courses, { nullable: true })
   @JoinTable({ name: 'course-student' })
   students?: Student[];
+
+  @CreateDateColumn({ name: 'created_at' })
+  created!: Date;
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  updated!: Date;
+
+  @DeleteDateColumn({ name: 'deleted_at' })
+  deleted?: Date;
 }

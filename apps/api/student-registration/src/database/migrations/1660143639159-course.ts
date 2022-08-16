@@ -21,6 +21,21 @@ export class course1660143639159 implements MigrationInterface {
             name: 'menu',
             type: 'text',
           },
+          {
+            name: 'created_at',
+            type: 'timestamp',
+            default: 'current_timestamp',
+          },
+          {
+            name: 'updated_at',
+            type: 'timestamp',
+            default: 'current_timestamp',
+          },
+          {
+            name: 'deleted_at',
+            type: 'date',
+            isNullable: true,
+          },
         ],
       }),
       true,

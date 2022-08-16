@@ -17,6 +17,21 @@ export class student1660143384564 implements MigrationInterface {
             name: 'name',
             type: 'varchar(50)',
           },
+          {
+            name: 'created_at',
+            type: 'timestamp',
+            default: 'current_timestamp',
+          },
+          {
+            name: 'updated_at',
+            type: 'timestamp',
+            default: 'current_timestamp',
+          },
+          {
+            name: 'deleted_at',
+            type: 'timestamp',
+            isNullable: true,
+          },
         ],
       }),
       true,

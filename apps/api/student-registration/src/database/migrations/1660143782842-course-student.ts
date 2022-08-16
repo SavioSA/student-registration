@@ -26,27 +26,42 @@ export class courseStudent1660143782842 implements MigrationInterface {
             name: 'course_code',
             type: 'int',
           },
+          {
+            name: 'created_at',
+            type: 'timestamp',
+            default: 'current_timestamp',
+          },
+          {
+            name: 'updated_at',
+            type: 'timestamp',
+            default: 'current_timestamp',
+          },
+          {
+            name: 'deleted_at',
+            type: 'timestamp',
+            isNullable: true,
+          },
         ],
       }),
       true,
     );
 
-    const userForeignKey = new TableForeignKey({
+    const studentForeignKey = new TableForeignKey({
       columnNames: ['student_code'],
       referencedColumnNames: ['code'],
       referencedTableName: 'student',
       onDelete: 'CASCADE',
     });
 
-    const contactTypeForeignKey = new TableForeignKey({
+    const courseForeignKey = new TableForeignKey({
       columnNames: ['course_code'],
       referencedColumnNames: ['code'],
       referencedTableName: 'course',
       onDelete: 'CASCADE',
     });
 
-    await queryRunner.createForeignKey('contact', userForeignKey);
-    await queryRunner.createForeignKey('contact', contactTypeForeignKey);
+    await queryRunner.createForeignKey('course-student', studentForeignKey);
+    await queryRunner.createForeignKey('course-student', courseForeignKey);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
