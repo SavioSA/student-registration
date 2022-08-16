@@ -23,4 +23,12 @@ export class CourseController {
       requestData.updateCourseDto,
     );
   }
+
+  @MessagePattern({ role: 'course', action: 'delete' })
+  deleteCourse(requestData: {
+    code: number;
+    updateCourseDto: UpdateCourseDto;
+  }) {
+    return this.courseService.deleteCourse(requestData.code);
+  }
 }

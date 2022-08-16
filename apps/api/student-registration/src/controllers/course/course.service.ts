@@ -40,4 +40,25 @@ export class CourseService {
       throw new RpcException(error);
     }
   }
+
+  async deleteCourse(code: number) {
+    try {
+      const courseExists = await this.courseRepository.findOne({
+        where: {
+          code,
+        },
+      });
+      if (!courseExists) {
+        throw new RpcException({
+          status: 404,
+          message: 'Course not found.',
+        });
+      } else {
+        await this.courseRepository.softDelete({ code });
+        return { message: 'Course deleted successfully' };
+      }
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
 }

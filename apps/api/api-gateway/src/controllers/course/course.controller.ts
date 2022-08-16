@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Param,
   Post,
   Put,
@@ -24,10 +25,15 @@ export class CourseController {
   }
 
   @Put('/:code')
-  async updateStudent(
+  async updateCourse(
     @Body() updateCourseDto: UpdateCourseDto,
     @Param('code') code: number,
   ) {
     return await this.courseService.updateCourse(code, updateCourseDto);
+  }
+
+  @Delete('/:code')
+  async deleteCourse(@Param('code') code: number) {
+    return await this.courseService.deleteCourse(code);
   }
 }
