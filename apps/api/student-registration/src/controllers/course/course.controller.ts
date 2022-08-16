@@ -1,6 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
-import CreateCourseDto from '../../../../dto/create-course.dto';
+import CreateCourseDto from '../../../../dto/course/create-course.dto';
+import UpdateCourseDto from '../../../../dto/course/update-course.dto';
 import { CourseService } from './course.service';
 
 @Controller('course')
@@ -10,5 +11,16 @@ export class CourseController {
   @MessagePattern({ role: 'course', action: 'create' })
   createCourse(requestData: { createCourseDto: CreateCourseDto }) {
     return this.courseService.createCourse(requestData.createCourseDto);
+  }
+
+  @MessagePattern({ role: 'course', action: 'update' })
+  updateCourse(requestData: {
+    code: number;
+    updateCourseDto: UpdateCourseDto;
+  }) {
+    return this.courseService.updateCourse(
+      requestData.code,
+      requestData.updateCourseDto,
+    );
   }
 }

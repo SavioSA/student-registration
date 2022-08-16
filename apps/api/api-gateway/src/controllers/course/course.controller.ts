@@ -1,13 +1,16 @@
 import {
   Body,
   Controller,
+  Param,
   Post,
+  Put,
   UseFilters,
   UsePipes,
   ValidationPipe
 } from '@nestjs/common';
 import { HttpExceptionFilter } from 'utils/http-exception.filter';
-import CreateCourseDto from '../../../../dto/create-course.dto';
+import CreateCourseDto from '../../../../dto/course/create-course.dto';
+import UpdateCourseDto from '../../../../dto/course/update-course.dto';
 import { CourseService } from './course.service';
 
 @Controller('/api/v1/course')
@@ -18,5 +21,13 @@ export class CourseController {
   @Post('/')
   async createStudent(@Body() createCourseDto: CreateCourseDto) {
     return await this.courseService.createCourse(createCourseDto);
+  }
+
+  @Put('/:code')
+  async updateStudent(
+    @Body() updateCourseDto: UpdateCourseDto,
+    @Param('code') code: number,
+  ) {
+    return await this.courseService.updateCourse(code, updateCourseDto);
   }
 }

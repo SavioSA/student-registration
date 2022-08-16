@@ -12,7 +12,7 @@ import {
   ValidationPipe
 } from '@nestjs/common';
 import { HttpExceptionFilter } from 'utils/http-exception.filter';
-import CreateStudentDto from '../../../../dto/create-student.dto';
+import CreateStudentDto from '../../../../dto/student/create-student.dto';
 import { StudentService } from './student.service';
 @Controller('/api/v1/student')
 @UseFilters(new HttpExceptionFilter())

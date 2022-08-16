@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
-import CreateStudentDto from '../../../../dto/create-student.dto';
+import CreateStudentDto from '../../../../dto/student/create-student.dto';
 import { StudentService } from './student.service';
 @Controller()
 export class StudentController {

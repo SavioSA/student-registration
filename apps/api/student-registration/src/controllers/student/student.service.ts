@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import { Repository } from 'typeorm';
-import CreateStudentDto from '../../../../dto/create-student.dto';
+import CreateStudentDto from '../../../../dto/student/create-student.dto';
 import Student from '../../database/entities/student.entity';
 
 @Injectable()

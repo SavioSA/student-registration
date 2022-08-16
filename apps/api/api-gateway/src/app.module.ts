@@ -2,8 +2,6 @@ import { BullModule } from '@nestjs/bull';
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { join } from 'path';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { CourseController } from './controllers/course/course.controller';
 import { CourseProcessor } from './controllers/course/course.processor';
 import { CourseService } from './controllers/course/course.service';
@@ -39,13 +37,7 @@ import { StudentService } from './controllers/student/student.service';
       processors: [join(__dirname, '/controllers/course/course.processor')],
     }),
   ],
-  controllers: [AppController, StudentController, CourseController],
-  providers: [
-    AppService,
-    StudentService,
-    StudentProcessor,
-    CourseService,
-    CourseProcessor,
-  ],
+  controllers: [StudentController, CourseController],
+  providers: [StudentService, StudentProcessor, CourseService, CourseProcessor],
 })
 export class AppModule {}

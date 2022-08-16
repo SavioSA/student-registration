@@ -1,7 +1,7 @@
 import { InjectQueue } from '@nestjs/bull';
 import { HttpException, Injectable } from '@nestjs/common';
 import { Job } from 'bull';
-import CreateStudentDto from '../../../../dto/create-student.dto';
+import CreateStudentDto from '../../../../dto/student/create-student.dto';
 
 @Injectable()
 export class StudentService {
