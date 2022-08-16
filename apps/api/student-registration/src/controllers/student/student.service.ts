@@ -105,11 +105,6 @@ export class StudentService {
 
   async getAllStudentCourses(code: number, limit = 0, page = 0) {
     try {
-      const take: number = !limit ? 0 : limit;
-      let currentPage: number = !page ? 0 : page;
-      currentPage = currentPage > 0 ? currentPage - 1 : currentPage;
-      const itensPerPage = currentPage * take;
-
       const student = await this.studentRepository.query(
         `SELECT *  FROM student as s LEFT JOIN
         "course-student" as cs ON s.code = cs.student_code LEFT JOIN
