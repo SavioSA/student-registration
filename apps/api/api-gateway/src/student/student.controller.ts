@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseFilters,
   UsePipes,
   ValidationPipe
@@ -22,6 +23,7 @@ export class StudentController {
   async createStudent(@Body() createStudentDto: CreateStudentDto) {
     return await this.studentService.createStudent(createStudentDto);
   }
+
   @Put('/:code')
   async updateStudent(
     @Body() createStudentDto: CreateStudentDto,
@@ -29,6 +31,7 @@ export class StudentController {
   ) {
     return await this.studentService.updateStudent(code, createStudentDto);
   }
+
   @Delete('/:code')
   async deleteStudent(@Param('code') code: number) {
     return await this.studentService.deleteStudent(code);
@@ -37,5 +40,13 @@ export class StudentController {
   @Get('/:code')
   async getStudent(@Param('code') code: number) {
     return await this.studentService.getStudent(code);
+  }
+
+  @Get('/')
+  async getAllStudents(
+    @Query('offset') offset: number,
+    @Query('page') page: number,
+  ) {
+    return await this.studentService.getAllStudents(offset, page);
   }
 }

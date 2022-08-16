@@ -77,4 +77,26 @@ export class StudentService {
       throw new RpcException(error);
     }
   }
+  async getAllStudents(offset = 0, page = 0) {
+    try {
+      const take: number = !offset ? 0 : offset;
+      let currentPage: number = !page ? 0 : page;
+      currentPage = currentPage > 0 ? currentPage - 1 : currentPage;
+      const itensPerPage = currentPage * take;
+
+      const studentsSearch = await this.studentRepository.findAndCount({
+        take,
+        skip: itensPerPage,
+      });
+
+      const students = studentsSearch[0];
+      const studentsTotalCount: number = studentsSearch[1];
+      const pagesQuantity: number = Math.ceil(
+        studentsTotalCount / (offset || studentsTotalCount),
+      );
+      return { students, pagesQuantity, totalItems: studentsTotalCount };
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
 }

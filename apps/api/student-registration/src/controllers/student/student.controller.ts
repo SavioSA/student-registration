@@ -30,4 +30,12 @@ export class StudentController {
   getStudent(requestData: { code: number }) {
     return this.studentService.getStudent(requestData.code);
   }
+
+  @MessagePattern({ role: 'student', action: 'get-all' })
+  getAllStudents(requestData: { offset: number; page: number }) {
+    return this.studentService.getAllStudents(
+      requestData.offset,
+      requestData.page,
+    );
+  }
 }
