@@ -1,4 +1,5 @@
 import { DataSource } from 'typeorm';
+import Course from './entities/course.entity';
 import Student from './entities/student.entity';
 import dataSource from './ormconfig';
 
@@ -12,6 +13,11 @@ export const databaseProviders = [
   {
     provide: 'STUDENT_REPOSITORY',
     useFactory: (dataSource: DataSource) => dataSource.getRepository(Student),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: 'COURSE_REPOSITORY',
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(Course),
     inject: ['DATA_SOURCE'],
   },
 ];
