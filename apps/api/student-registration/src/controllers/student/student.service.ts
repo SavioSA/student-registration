@@ -105,22 +105,22 @@ export class StudentService {
 
   async getAllStudentCourses(code: number, limit = 0, page = 0) {
     try {
-      const student = await this.studentRepository.query(
+      const courses = await this.studentRepository.query(
         `SELECT *  FROM student as s LEFT JOIN
         "course-student" as cs ON s.code = cs.student_code LEFT JOIN
         course as c ON c.code = cs.course_code
         WHERE student_code = ${code}
-         ${limit > 0 ? `LIMIT ${limit}` : ''}
-         ${page > 0 ? `offset ${page}` : ''};`,
+         ${page > 0 ? `OFFSET ${(page - 1) * limit}` : ''}
+         ${limit > 0 ? `LIMIT ${limit}` : ''};`,
       );
 
-      if (!student) {
+      if (!courses) {
         throw new RpcException({
           status: 404,
           message: 'Student not found.',
         });
       } else {
-        return student;
+        return courses;
       }
     } catch (error) {
       throw new RpcException(error);
