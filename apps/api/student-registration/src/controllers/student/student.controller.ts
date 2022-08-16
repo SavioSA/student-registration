@@ -20,4 +20,9 @@ export class StudentController {
       requestData.createStudentDto,
     );
   }
+
+  @MessagePattern({ role: 'student', action: 'delete' })
+  deleteStudent(requestData: { code: number }) {
+    return this.studentService.deleteStudent(requestData.code);
+  }
 }

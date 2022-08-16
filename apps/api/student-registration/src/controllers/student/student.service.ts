@@ -28,10 +28,31 @@ export class StudentService {
       if (!studentExists) {
         throw new RpcException({
           status: 404,
-          message: 'User not found.',
+          message: 'Student not found.',
         });
       } else {
-        return await this.studentRepository.update({ code }, createStudentDto);
+        await this.studentRepository.update({ code }, createStudentDto);
+        return { message: 'Student updated successfully' };
+      }
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+  async deleteStudent(code: number) {
+    try {
+      const studentExists = await this.studentRepository.findOne({
+        where: {
+          code,
+        },
+      });
+      if (!studentExists) {
+        throw new RpcException({
+          status: 404,
+          message: 'Student not found.',
+        });
+      } else {
+        await this.studentRepository.softDelete({ code });
+        return { message: 'Student deleted successfully' };
       }
     } catch (error) {
       throw new RpcException(error);

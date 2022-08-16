@@ -12,8 +12,6 @@ export class StudentService {
     const { returnvalue } = await this.studentQueue.getJobFromId(job.id);
     if (returnvalue.error) {
       const { error } = returnvalue;
-      console.log(error);
-
       throw new HttpException(error.message, error.status);
     } else {
       return returnvalue;
@@ -29,7 +27,7 @@ export class StudentService {
       const result = await this.waitJobProcess(job);
       return result;
     } catch (error) {
-      console.error(error);
+      throw new HttpException(error.response, error.status);
     }
   }
 
@@ -42,8 +40,19 @@ export class StudentService {
       const result = await this.waitJobProcess(job);
       return result;
     } catch (error) {
-      console.log(error);
+      throw new HttpException(error.response, error.status);
+    }
+  }
 
+  async deleteStudent(code: number) {
+    try {
+      const job: Job = await this.studentQueue.add('process-request', {
+        message: { role: 'student', action: 'delete' },
+        requestData: { code },
+      });
+      const result = await this.waitJobProcess(job);
+      return result;
+    } catch (error) {
       throw new HttpException(error.response, error.status);
     }
   }
