@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
-import Course from 'src/database/entities/course.entity';
+import CourseStudent from 'src/database/entities/course-student.entity';
 import { Repository } from 'typeorm';
 import CreateStudentDto from '../../../../dto/student/create-student.dto';
 import Student from '../../database/entities/student.entity';
@@ -11,7 +11,9 @@ export class StudentService {
     @Inject('STUDENT_REPOSITORY')
     private studentRepository: Repository<Student>,
     @Inject('COURSE_REPOSITORY')
-    private courseRepository: Repository<Course>,
+    private courseRepository: Repository<CourseStudent>,
+    @Inject('COURSE_STUDENT_REPOSITORY')
+    private courseStudentRepository: Repository<CourseStudent>,
   ) {}
 
   async createStudent(createStudentDto: CreateStudentDto) {
@@ -114,14 +116,59 @@ export class StudentService {
          ${limit > 0 ? `LIMIT ${limit}` : ''};`,
       );
 
-      if (!courses) {
+      if (!courses || courses.length < 1) {
         throw new RpcException({
           status: 404,
-          message: 'Student not found.',
+          message: 'Courses not found.',
         });
       } else {
         return courses;
       }
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async registerStudentInACourse(studentCode: number, courseCode: number) {
+    try {
+      const studentExists = await this.studentRepository.findOne({
+        where: {
+          code: studentCode,
+        },
+      });
+      const courseExists = await this.courseRepository.findOne({
+        where: {
+          code: courseCode,
+        },
+      });
+      const alreadyRegistered = await this.courseStudentRepository.findOne({
+        where: {
+          studentCode,
+          courseCode,
+        },
+      });
+      if (!studentExists) {
+        throw new RpcException({
+          status: 404,
+          message: 'Student not found.',
+        });
+      }
+      if (!courseExists) {
+        throw new RpcException({
+          status: 404,
+          message: 'Course not found.',
+        });
+      }
+      if (alreadyRegistered) {
+        throw new RpcException({
+          status: 409,
+          message: 'Student is already registered in course.',
+        });
+      }
+      return await this.courseStudentRepository.save({
+        studentCode,
+        courseCode,
+      });
     } catch (error) {
       throw new RpcException(error);
     }

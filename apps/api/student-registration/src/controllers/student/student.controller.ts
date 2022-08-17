@@ -51,4 +51,15 @@ export class StudentController {
       requestData.page,
     );
   }
+
+  @MessagePattern({ role: 'student', action: 'register-in-course' })
+  registerStudentInACourse(requestData: {
+    studentCode: number;
+    courseCode: number;
+  }) {
+    return this.studentService.registerStudentInACourse(
+      requestData.studentCode,
+      requestData.courseCode,
+    );
+  }
 }

@@ -13,6 +13,7 @@ import {
 } from '@nestjs/common';
 import { HttpExceptionFilter } from 'utils/http-exception.filter';
 import CreateStudentDto from '../../../../dto/student/create-student.dto';
+import RegisterStudentInCourseDto from '../../../../dto/student/register-student-in-course.dto';
 import { StudentService } from './student.service';
 @Controller('/api/v1/student')
 @UseFilters(new HttpExceptionFilter())
@@ -57,5 +58,16 @@ export class StudentController {
     @Query('page') page: number,
   ) {
     return await this.studentService.getAllStudentCourses(code, limit, page);
+  }
+
+  @Post('/:code/courses')
+  async registerStudentInACourse(
+    @Param('code') studentCode: number,
+    @Body() registerStudentInCourseDto: RegisterStudentInCourseDto,
+  ) {
+    return await this.studentService.registerStudentInACourse(
+      studentCode,
+      registerStudentInCourseDto,
+    );
   }
 }
