@@ -5,4 +5,30 @@
   left: 0;
   right: 0;
   background: #eee;
+  header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-color: #181848;
+    color: #fff;
+    position: absolute;
+    top: 0;
+    mat-icon.menu-icon{
+      cursor: pointer;
+      position: absolute;
+      left: 1rem;
+      font-size: 20pt;
+    }
+    .title-container{
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      h3{
+        margin-left: .2rem;
+      }
+    }
+  }
+
 }

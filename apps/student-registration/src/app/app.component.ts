@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
 import { Message } from '@student-registration/api-interfaces';
 
 @Component({
@@ -9,5 +9,10 @@ import { Message } from '@student-registration/api-interfaces';
 })
 export class AppComponent {
   hello$ = this.http.get<Message>('/api/hello');
-  constructor(private http: HttpClient) {}
+  menuOpened = false;
+  constructor(private http: HttpClient) { }
+
+  openMenu() {
+    this.menuOpened = true;
+  }
 }
