@@ -5,7 +5,9 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/student-registration",
         "index": "apps/student-registration/src/index.html",
@@ -17,7 +19,10 @@
           "apps/student-registration/src/favicon.ico",
           "apps/student-registration/src/assets"
         ],
-        "styles": ["apps/student-registration/src/styles.scss"],
+        "styles": [
+          "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+          "apps/student-registration/src/styles.scss"
+        ],
         "scripts": []
       },
       "configurations": {
@@ -85,7 +90,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/student-registration"],
+      "outputs": [
+        "coverage/apps/student-registration"
+      ],
       "options": {
         "jestConfig": "apps/student-registration/jest.config.ts",
         "passWithNoTests": true
