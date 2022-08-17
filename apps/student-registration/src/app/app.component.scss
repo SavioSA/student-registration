@@ -29,6 +29,9 @@
         margin-left: .2rem;
       }
     }
+    router-outlet{
+      margin-top: 5rem;
+    }
   }
 
 }
