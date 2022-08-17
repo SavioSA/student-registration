@@ -8,6 +8,10 @@ const routes: Routes = [
     component: IntialPageComponent
 
   },
+  {
+    path: 'student',
+    loadChildren: ()=> import('./views/student-form/student-form.module').then((c)=> c.StudentFormModule)
+  },
 ];
 
 @NgModule({

@@ -1,0 +1,18 @@
+<section class="student-form-container">
+  <mat-card>
+    <h1>
+      Novo estudante
+    </h1>
+    <form class="student-form" [formGroup]="studentForm" >
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Nome</mat-label>
+        <input matInput placeholder="Nome" formControlName="name">
+        <mat-error *ngIf="studentForm.controls.name.errors && !studentForm.controls.name.pristine">O nome deve conter entre 3 e 50 caracteres.</mat-error>
+      </mat-form-field>
+      <div class="buttons-container">
+        <button mat-raised-button>Cancelar</button>
+        <button mat-raised-button type="submit" color="primary">Cadastrar</button>
+      </div>
+    </form>
+  </mat-card>
+</section>

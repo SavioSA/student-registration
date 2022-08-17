@@ -7,12 +7,20 @@ import { AppComponent } from './app.component';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { MaterialModule } from './material.module';
 import { IntialPageComponent } from './views/intial-page/intial-page.component';
+import { StudentFormModule } from './views/student-form/student-form.module';
 
 
 
 @NgModule({
   declarations: [AppComponent, SideMenuComponent, IntialPageComponent],
-  imports: [BrowserModule, HttpClientModule, BrowserAnimationsModule, MaterialModule, AppRoutingModule],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    AppRoutingModule,
+    StudentFormModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
