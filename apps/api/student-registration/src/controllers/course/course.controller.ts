@@ -41,4 +41,17 @@ export class CourseController {
   getAllCourses(requestData: { limit: number; page: number }) {
     return this.courseService.getAllCourse(requestData.limit, requestData.page);
   }
+
+  @MessagePattern({ role: 'course', action: 'get-all-students' })
+  getAllCourseStudent(requestData: {
+    code: number;
+    limit: number;
+    page: number;
+  }) {
+    return this.courseService.getAllCourseStudent(
+      requestData.code,
+      requestData.limit,
+      requestData.page,
+    );
+  }
 }

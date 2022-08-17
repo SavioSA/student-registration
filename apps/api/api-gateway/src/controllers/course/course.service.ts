@@ -83,4 +83,17 @@ export class CourseService {
       throw new HttpException(error.response, error.status);
     }
   }
+
+  async getAllCourseStudent(code: number, limit: number, page: number) {
+    try {
+      const job: Job = await this.courseQueue.add('process-request', {
+        message: { role: 'course', action: 'get-all-students' },
+        requestData: { code, limit, page },
+      });
+      const result = await this.waitJobProcess(job);
+      return result;
+    } catch (error) {
+      throw new HttpException(error.response, error.status);
+    }
+  }
 }

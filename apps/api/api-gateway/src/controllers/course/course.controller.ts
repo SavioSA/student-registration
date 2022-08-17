@@ -51,4 +51,15 @@ export class CourseController {
   ) {
     return await this.courseService.getAllCourses(limit, page);
   }
+
+  @Get('/:code/students')
+  async getAllCourseStudent(
+    @Param('code') code: number,
+    @Query('limit') limit: number,
+    @Query('page') page: number,
+  ) {
+    console.log(limit);
+
+    return await this.courseService.getAllCourseStudent(code, limit, page);
+  }
 }
