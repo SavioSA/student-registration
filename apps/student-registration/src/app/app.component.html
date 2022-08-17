@@ -1,9 +1,4 @@
-<div style="text-align: center">
-  <h1>Welcome to student-registration!</h1>
-  <img
-    width="450"
-    src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png"
-    alt="Nx - Smart, Fast and Extensible Build System"
-  />
-</div>
-<div>Message: {{ hello$ | async | json }}</div>
+<mat-sidenav-container class="main-container" hasBackdrop="true">
+  <mat-sidenav mode="over" opened><student-registration-side-menu></student-registration-side-menu></mat-sidenav>
+  <mat-sidenav-content>Main content</mat-sidenav-content>
+</mat-sidenav-container>
