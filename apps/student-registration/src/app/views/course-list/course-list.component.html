@@ -1,13 +1,13 @@
-<section class="student-list">
+<section class="course-list">
   <h3>
-    Lista de Alunos
+    Lista de Cursos
   </h3>
-  <div class="table-container" *ngIf="students.length !== 0">
-    <table mat-table [dataSource]="students" class="mat-elevation-z8 ">
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Nome </th>
+  <div class="table-container" *ngIf="courses.length !== 0">
+    <table mat-table [dataSource]="courses" class="mat-elevation-z8 ">
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef> Descrição </th>
         <td mat-cell *matCellDef="let element">
-          {{element.name}}
+          {{element.description}}
         </td>
       </ng-container>
 
@@ -17,25 +17,25 @@
           <div class="icons-container">
             <mat-icon class="delete-icon" (click)="openDeleteDialog({
               code: element.code,
-              name: element.name
+              description: element.description
             })">delete</mat-icon>
-            <mat-icon class="edit-icon" (click)="goToStudent(element.code)">edit</mat-icon>
+            <mat-icon class="edit-icon" (click)="goToCourse(element.code)">edit</mat-icon>
           </div>
         </td>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="['name', 'actions']"></tr>
-      <tr mat-row *matRowDef="let row; columns: ['name', 'actions'];"></tr>
+      <tr mat-header-row *matHeaderRowDef="['description', 'actions']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['description', 'actions'];"></tr>
     </table>
   </div>
   <mat-paginator
     [length]="totalItems"
     [pageSize]="7"
     (page)="changeIndex($event)"
-    *ngIf="students.length !== 0"
+    *ngIf="courses.length !== 0"
   >
   </mat-paginator>
-  <section class="empty-list" *ngIf="students.length === 0 && page === 0">
+  <section class="empty-list" *ngIf="courses.length === 0 && page === 0">
     <h2>Você ainda não tem nenhum aluno</h2>
   <mat-icon>sentiment_very_dissatisfied</mat-icon>
   </section>

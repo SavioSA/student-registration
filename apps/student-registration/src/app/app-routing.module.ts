@@ -17,6 +17,10 @@ const routes: Routes = [
     loadChildren: ()=> import('./views/student-form/student-form.module').then((c)=> c.StudentFormModule)
   },
   {
+    path: 'course/list',
+    loadChildren: ()=> import('./views/course-list/course-list-routing.module').then((c)=> c.CourseListRoutingModule)
+  },
+  {
     path: 'course',
     loadChildren: ()=> import('./views/course-form/course-form.module').then((c)=> c.CourseFormModule)
   },

@@ -67,7 +67,7 @@ export class CourseFormComponent implements OnInit {
   }
 
   async updateCourse() {
-    const queryPut = this.courseService.updateStudent(this.courseCode as number, {
+    const queryPut = this.courseService.updateCourse(this.courseCode as number, {
       menu: this.courseForm.controls.menu.value as string,
       description: this.courseForm.controls.description.value as string
     });
