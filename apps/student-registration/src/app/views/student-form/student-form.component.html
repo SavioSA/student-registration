@@ -1,9 +1,9 @@
 <section class="student-form-container">
   <mat-card>
     <h1>
-      Novo estudante
+      {{ studentCode ? "Editar aluno" : "Novo aluno" }}
     </h1>
-    <form class="student-form" [formGroup]="studentForm" >
+    <form class="student-form" [formGroup]="studentForm" (submit)="saveStudent()" >
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Nome</mat-label>
         <input matInput placeholder="Nome" formControlName="name">
@@ -11,7 +11,9 @@
       </mat-form-field>
       <div class="buttons-container">
         <button mat-raised-button>Cancelar</button>
-        <button mat-raised-button type="submit" color="primary">Cadastrar</button>
+        <button mat-raised-button type="submit" [disabled]="!studentForm.valid" color="primary">
+          {{ studentCode ? "Salvar" : "Cadastrar" }}
+        </button>
       </div>
     </form>
   </mat-card>

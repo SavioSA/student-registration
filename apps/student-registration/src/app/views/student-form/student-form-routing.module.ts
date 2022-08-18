@@ -7,6 +7,10 @@ const routes: Routes = [
     path: 'new',
     component: StudentFormComponent,
   },
+  {
+    path: ':code',
+    component: StudentFormComponent,
+  },
 ];
 
 @NgModule({
