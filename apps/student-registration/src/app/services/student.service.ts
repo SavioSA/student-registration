@@ -49,6 +49,15 @@ export class StudentService {
     );
   }
 
+  deleteStudent(code: number): Observable<MessageInterface> {
+    return this.http.delete<MessageInterface>(`${this.url}/${code}`).pipe(
+      catchError((error) => {
+        this.showError(error.message)
+        return throwError(() => error);
+      })
+    );
+  }
+
   showError(msg: string) {
     this._snackBar.open(msg, 'OK');
   }

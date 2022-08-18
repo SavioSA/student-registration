@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
+import { DialogConfirmationComponent } from '../../components/dialog-confirmation/dialog-confirmation.component';
 import StudentInterface from '../../interfaces/student.interface';
 import { StudentService } from '../../services/student.service';
 
@@ -13,7 +16,9 @@ import { StudentService } from '../../services/student.service';
 export class StudentListComponent implements OnInit {
   constructor(
     private studentService: StudentService,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar
   ) { }
   students: StudentInterface[] = [];
   pagesQuantity = 0;
@@ -35,5 +40,32 @@ export class StudentListComponent implements OnInit {
 
   goToStudent(code: number) {
     this.router.navigate([`student/${code}`])
+  }
+
+  async deleteStudent(studentId: number) {
+    const deleteQuery = this.studentService.deleteStudent(studentId);
+    const result = await lastValueFrom(deleteQuery);
+    if (result.message) {
+      this._snackBar.open('Usuário excluído com sucesso.', 'Ok');
+      this.ngOnInit();
+    }
+  }
+
+  openDeleteDialog(studentInformations: {
+    code: number;
+    name: string;
+  }) {
+    const dialogRef = this.dialog.open(DialogConfirmationComponent, {
+      width: '16rem',
+      height: '184px',
+      data: {
+        message: `Deseja realmente excluir o aluno ${studentInformations.name}?`,
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result.response) {
+        this.deleteStudent(studentInformations.code);
+      }
+    });
   }
 }
