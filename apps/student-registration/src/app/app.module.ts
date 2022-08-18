@@ -12,14 +12,12 @@ import { IntialPageComponent } from './views/intial-page/intial-page.component';
 import { StudentFormModule } from './views/student-form/student-form.module';
 import { StudentListModule } from './views/student-list/student-list.module';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
     SideMenuComponent,
     IntialPageComponent,
-    DialogConfirmationComponent
+    DialogConfirmationComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,7 +27,7 @@ import { StudentListModule } from './views/student-list/student-list.module';
     AppRoutingModule,
     StudentFormModule,
     StudentListModule,
-    CourseListModule
+    CourseListModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -10,7 +10,7 @@ export class SideMenuComponent implements OnInit {
   closeMenuEmitter: EventEmitter<string> = new EventEmitter();
   constructor() {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   closeMenu() {
     this.closeMenuEmitter.emit('close');

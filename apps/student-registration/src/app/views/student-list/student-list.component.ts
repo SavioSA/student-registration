@@ -19,7 +19,7 @@ export class StudentListComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     private _snackBar: MatSnackBar
-  ) { }
+  ) {}
   students: StudentInterface[] = [];
   pagesQuantity = 0;
   totalItems = 0;
@@ -30,20 +30,20 @@ export class StudentListComponent implements OnInit {
   }
 
   changeIndex(pageEvent: PageEvent) {
-    this.getStudents(7, pageEvent.pageIndex + 1)
-    this.page = pageEvent.pageIndex + 1
+    this.getStudents(7, pageEvent.pageIndex + 1);
+    this.page = pageEvent.pageIndex + 1;
   }
 
   async getStudents(limit = 7, page = 0) {
     const query = this.studentService.getStudents(limit, page);
     const result = await lastValueFrom(query);
-    this.students = result.students
-    this.pagesQuantity = result.pagesQuantity
-    this.totalItems = result.totalItems
+    this.students = result.students;
+    this.pagesQuantity = result.pagesQuantity;
+    this.totalItems = result.totalItems;
   }
 
   goToStudent(code: number) {
-    this.router.navigate([`student/${code}`])
+    this.router.navigate([`student/${code}`]);
   }
 
   async deleteStudent(studentId: number) {
@@ -51,15 +51,12 @@ export class StudentListComponent implements OnInit {
     const result = await lastValueFrom(deleteQuery);
     if (result.message) {
       this._snackBar.open('Usuário excluído com sucesso.', 'Ok');
-      this.paginator.pageIndex = 0
+      this.paginator.pageIndex = 0;
       this.ngOnInit();
     }
   }
 
-  openDeleteDialog(studentInformations: {
-    code: number;
-    name: string;
-  }) {
+  openDeleteDialog(studentInformations: { code: number; name: string }) {
     const dialogRef = this.dialog.open(DialogConfirmationComponent, {
       width: '16rem',
       height: '184px',

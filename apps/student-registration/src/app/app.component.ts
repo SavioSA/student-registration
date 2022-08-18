@@ -10,7 +10,7 @@ import { Message } from '@student-registration/api-interfaces';
 export class AppComponent {
   hello$ = this.http.get<Message>('/api/hello');
   menuOpened = false;
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   openMenu() {
     this.menuOpened = true;

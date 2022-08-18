@@ -14,17 +14,21 @@ export class StudentFormComponent implements OnInit {
     name: [
       '',
       {
-        validators: [Validators.required, Validators.minLength(3), Validators.maxLength(50)]
-      }
-    ]
-  })
+        validators: [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(50),
+        ],
+      },
+    ],
+  });
   studentCode: number | undefined;
   constructor(
     private fb: FormBuilder,
     private studentService: StudentService,
     public activatedRoute: ActivatedRoute,
-    public router: Router,
-  ) { }
+    public router: Router
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
@@ -40,31 +44,34 @@ export class StudentFormComponent implements OnInit {
 
   saveStudent() {
     if (this.studentCode) {
-      this.updateStudent()
+      this.updateStudent();
     } else {
-      this.createStudent()
+      this.createStudent();
     }
   }
 
   async createStudent() {
     const queryPost = this.studentService.registerStudent({
-      name: this.studentForm.controls.name.value as string
-    })
-    const result = await lastValueFrom(queryPost)
+      name: this.studentForm.controls.name.value as string,
+    });
+    const result = await lastValueFrom(queryPost);
     if (result.code) {
-      this.router.navigate([`/student/${result.code}`])
+      this.router.navigate([`/student/${result.code}`]);
     }
   }
 
   async updateStudent() {
-    const queryPut = this.studentService.updateStudent( this.studentCode as number,{
-      name: this.studentForm.controls.name.value as string
-    });
+    const queryPut = this.studentService.updateStudent(
+      this.studentCode as number,
+      {
+        name: this.studentForm.controls.name.value as string,
+      }
+    );
     const result = await lastValueFrom(queryPut);
   }
 
   async getStudent(code: number) {
-    const query = this.studentService.getStudent(code)
+    const query = this.studentService.getStudent(code);
     const result = await lastValueFrom(query);
     if (result.code) {
       this.studentCode = result.code;

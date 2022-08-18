@@ -11,7 +11,7 @@ import { CourseListComponent } from './course-list.component';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    CourseListRoutingModule
+    CourseListRoutingModule,
   ],
   declarations: [CourseListComponent],
 })

@@ -13,7 +13,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'new'
+    redirectTo: 'new',
   },
 ];
 
@@ -21,6 +21,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class CourseFormRoutingModule {
-
-}
+export class CourseFormRoutingModule {}

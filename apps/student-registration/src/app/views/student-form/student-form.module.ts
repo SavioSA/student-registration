@@ -6,7 +6,13 @@ import { StudentFormRoutingModule } from './student-form-routing.module';
 import { StudentFormComponent } from './student-form.component';
 
 @NgModule({
-  imports: [ CommonModule, MaterialModule, StudentFormRoutingModule, FormsModule, ReactiveFormsModule ],
-  declarations: [ StudentFormComponent ],
+  imports: [
+    CommonModule,
+    MaterialModule,
+    StudentFormRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
+  declarations: [StudentFormComponent],
 })
 export class StudentFormModule {}

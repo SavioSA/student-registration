@@ -19,7 +19,7 @@ export class CourseListComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     private _snackBar: MatSnackBar
-  ) { }
+  ) {}
   page = 0;
   pagesQuantity = 0;
   totalItems = 0;
@@ -30,20 +30,20 @@ export class CourseListComponent implements OnInit {
   }
 
   changeIndex(pageEvent: PageEvent) {
-    this.getCourses(7, pageEvent.pageIndex + 1)
-    this.page = pageEvent.pageIndex + 1
+    this.getCourses(7, pageEvent.pageIndex + 1);
+    this.page = pageEvent.pageIndex + 1;
   }
 
   async getCourses(limit = 7, page = 0) {
     const query = this.courseService.getCourses(limit, page);
     const result = await lastValueFrom(query);
-    this.courses = result.courses
-    this.pagesQuantity = result.pagesQuantity
-    this.totalItems = result.totalItems
+    this.courses = result.courses;
+    this.pagesQuantity = result.pagesQuantity;
+    this.totalItems = result.totalItems;
   }
 
   goToCourse(code: number) {
-    this.router.navigate([`course/${code}`])
+    this.router.navigate([`course/${code}`]);
   }
 
   async deleteCourse(courseId: number) {
@@ -51,15 +51,12 @@ export class CourseListComponent implements OnInit {
     const result = await lastValueFrom(deleteQuery);
     if (result.message) {
       this._snackBar.open('Curso excluído com sucesso.', 'Ok');
-      this.paginator.pageIndex = 0
+      this.paginator.pageIndex = 0;
       this.ngOnInit();
     }
   }
 
-  openDeleteDialog(courseInformations: {
-    code: number;
-    description: string;
-  }) {
+  openDeleteDialog(courseInformations: { code: number; description: string }) {
     const dialogRef = this.dialog.open(DialogConfirmationComponent, {
       width: '16rem',
       height: '184px',
