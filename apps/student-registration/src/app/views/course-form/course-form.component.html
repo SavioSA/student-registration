@@ -3,16 +3,16 @@
     <h1>
       {{ courseCode ? "Editar curso" : "Novo curso" }}
     </h1>
-    <form class="course-form" [formGroup]="courseForm" >
+    <form class="course-form" [formGroup]="courseForm" (submit)="saveCourse()">
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Descrição</mat-label>
         <input matInput placeholder="Descrição" formControlName="description">
-        <mat-error *ngIf="courseForm.controls.description.errors && !courseForm.controls.description.pristine">O nome deve conter entre 3 e 50 caracteres.</mat-error>
+        <mat-error *ngIf="courseForm.controls.description.errors && !courseForm.controls.description.pristine">A descrição deve conter entre 3 e 50 caracteres.</mat-error>
       </mat-form-field>
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Ementa</mat-label>
         <textarea matInput placeholder="Ementa" formControlName="menu" rows="5"></textarea>
-        <mat-error *ngIf="courseForm.controls.menu.errors && !courseForm.controls.menu.pristine">O nome deve conter no mínimo 3</mat-error>
+        <mat-error *ngIf="courseForm.controls.menu.errors && !courseForm.controls.menu.pristine">A ementa deve conter no mínimo 3</mat-error>
       </mat-form-field>
       <div class="buttons-container">
         <button mat-raised-button routerLink="">Cancelar</button>
