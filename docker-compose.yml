@@ -70,7 +70,7 @@ services:
     volumes:
       - ./apps/api/student-registration:/app/apps/api/student-registration
       - ./apps/api/dto:/app/apps/api/dto
-    command: sh -c "cd apps/api/student-registration && yarn start:dev"
+    command: sh -c "cd apps/api/student-registration && yarn migration:up && yarn start:dev"
     ports:
       - "${STUDENT_REGISTRATION_SERVICE_PORT}:${STUDENT_REGISTRATION_SERVICE_PORT}"
     expose:
