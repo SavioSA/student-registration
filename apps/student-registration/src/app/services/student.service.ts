@@ -40,7 +40,7 @@ export class StudentService {
     );
   }
 
-  getStudents(limit = 8, page = 0): Observable<StudentsPaginatedInterface> {
+  getStudents(limit = 7, page = 0): Observable<StudentsPaginatedInterface> {
     return this.http.get<StudentsPaginatedInterface>(`${this.url}?limit=${limit}&page=${page}`).pipe(
       catchError((error) => {
         this.showError(error.message)

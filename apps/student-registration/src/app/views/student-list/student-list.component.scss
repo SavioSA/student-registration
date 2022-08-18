@@ -1,5 +1,5 @@
 .contact-list{
-  margin-top: 5rem;
+  margin-top: 4rem;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -7,7 +7,7 @@
   align-items: center;
   .table-container{
     width: 60%;
-    min-height: 27.5rem;
+    min-height: 25.5rem;
     table{
       width: 100%;
       .mat-column-actions{
@@ -18,6 +18,7 @@
           cursor: pointer;
           .delete-icon{
             color: #db0000;
+            margin-right: .2rem;
           }
           .edit-icon{
             color: #181848;

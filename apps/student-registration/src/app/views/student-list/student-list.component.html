@@ -1,5 +1,8 @@
 <section class="contact-list">
-  <div class="table-container" >
+  <h3>
+    Lista de Alunos
+  </h3>
+  <div class="table-container" *ngIf="students.length !== 0">
     <table mat-table [dataSource]="students" class="mat-elevation-z8 ">
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Nome </th>
@@ -26,13 +29,14 @@
     </table>
   </div>
   <mat-paginator
-    [length]="10"
-    [pageSize]="8"
+    [length]="totalItems"
+    [pageSize]="7"
     (page)="changeIndex($event)"
+    *ngIf="students.length !== 0"
   >
   </mat-paginator>
-  <section class="empty-list" *ngIf="students.length === 0">
-    <h2>Você ainda não tem nenhum aluno. clique no botão verde para adicionar.</h2>
+  <section class="empty-list" *ngIf="students.length === 0 && page === 0">
+    <h2>Você ainda não tem nenhum aluno</h2>
   <mat-icon>sentiment_very_dissatisfied</mat-icon>
   </section>
 </section>

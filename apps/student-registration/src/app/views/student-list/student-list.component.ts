@@ -23,14 +23,18 @@ export class StudentListComponent implements OnInit {
   students: StudentInterface[] = [];
   pagesQuantity = 0;
   totalItems = 0;
+  page = 0;
+
   async ngOnInit(): Promise<void> {
     this.getStudents();
   }
+
   changeIndex(pageEvent: PageEvent) {
-    this.getStudents(8, pageEvent.pageIndex + 1 )
+    this.getStudents(7, pageEvent.pageIndex + 1)
+    this.page = pageEvent.pageIndex + 1
   }
 
-  async getStudents(limit = 8, page = 0) {
+  async getStudents(limit = 7, page = 0) {
     const query = this.studentService.getStudents(limit, page);
     const result = await lastValueFrom(query);
     this.students = result.students
