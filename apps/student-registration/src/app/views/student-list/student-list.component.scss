@@ -1,0 +1,49 @@
+.contact-list{
+  margin-top: 5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-items: center;
+  .table-container{
+    width: 60%;
+    min-height: 27.5rem;
+    table{
+      width: 100%;
+      .mat-column-actions{
+        width: 10%;
+      }
+      td{
+        .icons-container{
+          cursor: pointer;
+          .delete-icon{
+            color: #db0000;
+          }
+          display: flex;
+        }
+      }
+    }
+  }
+
+  mat-card{
+    width: 100%;
+  }
+
+  mat-paginator{
+    margin-top: 1rem;
+    width: 60%;
+    background-color: #fff;
+  }
+
+  .empty-list{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    mat-icon{
+     font-size: 10rem;
+     width: 10rem;
+     height: 10rem;
+    }
+  }
+}

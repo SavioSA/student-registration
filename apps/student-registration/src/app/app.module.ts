@@ -8,6 +8,7 @@ import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { MaterialModule } from './material.module';
 import { IntialPageComponent } from './views/intial-page/intial-page.component';
 import { StudentFormModule } from './views/student-form/student-form.module';
+import { StudentListModule } from './views/student-list/student-list.module';
 
 
 
@@ -20,6 +21,7 @@ import { StudentFormModule } from './views/student-form/student-form.module';
     MaterialModule,
     AppRoutingModule,
     StudentFormModule,
+    StudentListModule
   ],
   providers: [],
   bootstrap: [AppComponent],

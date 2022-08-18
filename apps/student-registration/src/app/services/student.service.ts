@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, Observable, throwError } from 'rxjs';
 import MessageInterface from '../interfaces/message.interface';
 import StudentInterface from '../interfaces/student.interface';
+import StudentsPaginatedInterface from '../interfaces/students-paginated.inteface';
 
 @Injectable({
   providedIn: 'root'
@@ -30,8 +31,17 @@ export class StudentService {
     );
   }
 
-  getStudent(code: number) {
+  getStudent(code: number): Observable<StudentInterface> {
     return this.http.get<StudentInterface>(`${this.url}/${code}`).pipe(
+      catchError((error) => {
+        this.showError(error.message)
+        return throwError(() => error);
+      })
+    );
+  }
+
+  getStudents(limit = 8, page = 0): Observable<StudentsPaginatedInterface> {
+    return this.http.get<StudentsPaginatedInterface>(`${this.url}?limit=${limit}&page=${page}`).pipe(
       catchError((error) => {
         this.showError(error.message)
         return throwError(() => error);

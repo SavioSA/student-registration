@@ -9,6 +9,10 @@ const routes: Routes = [
 
   },
   {
+    path: 'student/list',
+    loadChildren: ()=> import('./views/student-list/student-list.module').then((c)=> c.StudentListModule)
+  },
+  {
     path: 'student',
     loadChildren: ()=> import('./views/student-form/student-form.module').then((c)=> c.StudentFormModule)
   },
