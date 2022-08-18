@@ -1,5 +1,5 @@
 <mat-sidenav-container class="main-container" hasBackdrop="true">
-  <mat-sidenav mode="over"  [(opened)]="menuOpened"><student-registration-side-menu></student-registration-side-menu></mat-sidenav>
+  <mat-sidenav mode="over"  [(opened)]="menuOpened"><student-registration-side-menu (closeMenuEmitter)="closeMenu()"></student-registration-side-menu></mat-sidenav>
   <mat-sidenav-content>
     <header>
       <mat-icon class="menu-icon" (click)="openMenu()">menu</mat-icon>
@@ -10,4 +10,5 @@
     </header>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
+
 </mat-sidenav-container>

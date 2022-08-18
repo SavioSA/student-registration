@@ -61,7 +61,6 @@ export class StudentFormComponent implements OnInit {
       name: this.studentForm.controls.name.value as string
     });
     const result = await lastValueFrom(queryPut);
-    console.log(result);
   }
 
   async getStudent(code: number) {
