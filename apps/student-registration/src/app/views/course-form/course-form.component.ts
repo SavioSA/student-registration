@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
+import { DialogConfirmationComponent } from '../../components/dialog-confirmation/dialog-confirmation.component';
+import StudentInterface from '../../interfaces/student.interface';
 import { CourseService } from '../../services/course.service';
 
 @Component({
@@ -11,7 +15,11 @@ import { CourseService } from '../../services/course.service';
   styleUrls: ['./course-form.component.scss'],
 })
 export class CourseFormComponent implements OnInit {
-  courseCode :number | undefined;
+  courseCode: number | undefined;
+  students: StudentInterface[] = [];
+  pagesQuantity = 0;
+  totalItems = 0;
+  page = 0;
   courseForm = this.fb.group({
     description: [
       '',
@@ -31,7 +39,8 @@ export class CourseFormComponent implements OnInit {
     private courseService: CourseService,
     public router: Router,
     public activatedRoute: ActivatedRoute,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    public dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -85,7 +94,38 @@ export class CourseFormComponent implements OnInit {
       this.courseCode = result.code;
       this.courseForm.controls.description.setValue(result.description);
       this.courseForm.controls.menu.setValue(result.menu);
+      this.getCourseStudents();
     }
+  }
+
+  async getCourseStudents(limit = 7, page = 0) {
+    const query = this.courseService.getCourseStudents(this.courseCode as number, limit, page);
+    const result = await lastValueFrom(query);
+    this.students = result;
+    console.log(result);
+  }
+
+  openDeleteDialog(studentInformations: {
+    code: number;
+    name: string;
+  }) {
+    const dialogRef = this.dialog.open(DialogConfirmationComponent, {
+      width: '16rem',
+      height: '184px',
+      data: {
+        message: `Deseja realmente excluir o aluno ${studentInformations.name}?`,
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result.response) {
+        // this.deleteStudent(studentInformations.code);
+      }
+    });
+  }
+
+  changeIndex(pageEvent: PageEvent) {
+    this.getCourseStudents(7, pageEvent.pageIndex + 1)
+    this.page = pageEvent.pageIndex + 1
   }
 
 }

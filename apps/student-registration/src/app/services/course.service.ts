@@ -6,6 +6,7 @@ import { catchError, Observable, throwError } from 'rxjs';
 import CourseInterface from '../interfaces/course.interface';
 import CoursesPaginatedInterface from '../interfaces/courses-paginated.inteface';
 import MessageInterface from '../interfaces/message.interface';
+import StudentInterface from '../interfaces/student.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -58,6 +59,14 @@ export class CourseService {
     return this.http.delete<MessageInterface>(`${this.url}/${code}`).pipe(
       catchError((error) => {
         this.handleError(error.message)
+        return throwError(() => error);
+      })
+    );
+  }
+
+  getCourseStudents(code: number, limit = 7, page = 0): Observable<StudentInterface[]> {
+    return this.http.get<StudentInterface[]>(`${this.url}/${code}/students?limit=${limit}&page=${page}`).pipe(
+      catchError((error) => {
         return throwError(() => error);
       })
     );

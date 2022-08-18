@@ -11,6 +11,41 @@ mat-card{
 
 }
 
+mat-accordion{
+  margin-top: 2rem;
+  width: 105%;
+  .table-container{
+    width: 100%;
+    table{
+      width: 100%;
+      .mat-column-actions{
+        width: 10%;
+      }
+      td{
+        .icons-container{
+          cursor: pointer;
+          .delete-icon{
+            color: #db0000;
+            margin-right: .2rem;
+          }
+          .edit-icon{
+            color: #181848;
+          }
+          display: flex;
+        }
+      }
+    }
+  }
+
+  .table-options{
+    position: relative;
+    button{
+      top: 1rem;
+      position: absolute;
+    }
+  }
+}
+
 .course-form-container{
   display: flex;
   justify-content: center;
@@ -33,3 +68,4 @@ mat-card{
     }
   }
 }
+

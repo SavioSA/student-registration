@@ -108,7 +108,7 @@ export class CourseService {
   async getAllCourseStudent(code: number, limit = 0, page = 0) {
     try {
       const students = await this.courseRepository.query(
-        `SELECT *  FROM student as s LEFT JOIN
+        `SELECT s.code as code, s.name as name  FROM student as s LEFT JOIN
         "course-student" as cs ON s.code = cs.student_code LEFT JOIN
         course as c ON c.code = cs.course_code
         WHERE course_code = ${code}
