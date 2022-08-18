@@ -39,7 +39,7 @@ export class CourseFormComponent implements OnInit {
       if (params['code']) {
         this.courseCode = params['code'];
         this.getCourse(this.courseCode as number);
-        if (this.courseForm.controls.description.value !== '') {
+        if (isNaN(this.courseCode as number)) {
           this.router.navigate([`/`]);
         }
       }
@@ -80,6 +80,7 @@ export class CourseFormComponent implements OnInit {
   async getCourse(code: number) {
     const query = this.courseService.getCourse(code)
     const result = await lastValueFrom(query);
+
     if (result.code) {
       this.courseCode = result.code;
       this.courseForm.controls.description.setValue(result.description);

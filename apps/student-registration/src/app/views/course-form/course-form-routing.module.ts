@@ -11,6 +11,10 @@ const routes: Routes = [
     path: ':code',
     component: CourseFormComponent,
   },
+  {
+    path: '**',
+    redirectTo: 'new'
+  },
 ];
 
 @NgModule({
