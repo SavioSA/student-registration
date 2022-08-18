@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -24,7 +24,7 @@ export class CourseListComponent implements OnInit {
   pagesQuantity = 0;
   totalItems = 0;
   courses: CourseInterface[] = [];
-
+  @ViewChild('paginator') paginator: any;
   ngOnInit(): void {
     this.getCourses();
   }
@@ -51,6 +51,7 @@ export class CourseListComponent implements OnInit {
     const result = await lastValueFrom(deleteQuery);
     if (result.message) {
       this._snackBar.open('Curso excluído com sucesso.', 'Ok');
+      this.paginator.pageIndex = 0
       this.ngOnInit();
     }
   }

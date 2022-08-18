@@ -29,6 +29,7 @@
     </table>
   </div>
   <mat-paginator
+    #paginator
     [length]="totalItems"
     [pageSize]="7"
     (page)="changeIndex($event)"

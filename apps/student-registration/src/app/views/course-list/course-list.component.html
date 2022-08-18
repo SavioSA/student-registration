@@ -29,8 +29,10 @@
     </table>
   </div>
   <mat-paginator
+    #paginator
     [length]="totalItems"
     [pageSize]="7"
+    [pageIndex]="0"
     (page)="changeIndex($event)"
     *ngIf="courses.length !== 0"
   >
