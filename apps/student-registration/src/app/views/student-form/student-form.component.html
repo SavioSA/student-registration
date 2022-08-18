@@ -10,7 +10,7 @@
         <mat-error *ngIf="studentForm.controls.name.errors && !studentForm.controls.name.pristine">O nome deve conter entre 3 e 50 caracteres.</mat-error>
       </mat-form-field>
       <div class="buttons-container">
-        <button mat-raised-button>Cancelar</button>
+        <button mat-raised-button routerLink="">Cancelar</button>
         <button mat-raised-button type="submit" [disabled]="!studentForm.valid" color="primary">
           {{ studentCode ? "Salvar" : "Cadastrar" }}
         </button>
