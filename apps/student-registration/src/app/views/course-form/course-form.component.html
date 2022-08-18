@@ -1,0 +1,25 @@
+<section class="course-form-container">
+  <mat-card>
+    <h1>
+      {{ courseCode ? "Editar curso" : "Novo curso" }}
+    </h1>
+    <form class="course-form" [formGroup]="courseForm" >
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Descrição</mat-label>
+        <input matInput placeholder="Descrição" formControlName="description">
+        <mat-error *ngIf="courseForm.controls.description.errors && !courseForm.controls.description.pristine">O nome deve conter entre 3 e 50 caracteres.</mat-error>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Ementa</mat-label>
+        <textarea matInput placeholder="Ementa" formControlName="menu" rows="5"></textarea>
+        <mat-error *ngIf="courseForm.controls.menu.errors && !courseForm.controls.menu.pristine">O nome deve conter no mínimo 3</mat-error>
+      </mat-form-field>
+      <div class="buttons-container">
+        <button mat-raised-button routerLink="">Cancelar</button>
+        <button mat-raised-button type="submit" [disabled]="!courseForm.valid" color="primary">
+          {{ courseCode ? "Salvar" : "Cadastrar" }}
+        </button>
+      </div>
+    </form>
+  </mat-card>
+</section>
