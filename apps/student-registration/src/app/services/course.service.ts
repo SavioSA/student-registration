@@ -40,6 +40,7 @@ export class CourseService {
   getCourse(code: number): Observable<CourseInterface> {
     return this.http.get<CourseInterface>(`${this.url}/${code}`).pipe(
       catchError((error) => {
+        this.router.navigate([`/`]);
         this.handleError(error.message)
         return throwError(() => error);
       })
@@ -73,7 +74,6 @@ export class CourseService {
   }
 
   handleError(msg: string) {
-    this.router.navigate([`/`]);
     this._snackBar.open(msg, 'OK');
   }
 }

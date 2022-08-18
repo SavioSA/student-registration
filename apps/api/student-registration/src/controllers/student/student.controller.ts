@@ -62,4 +62,12 @@ export class StudentController {
       requestData.courseCode,
     );
   }
+
+  @MessagePattern({ role: 'student', action: 'remove-from-course' })
+  removeFromACourse(requestData: { studentCode: number; courseCode: number }) {
+    return this.studentService.removeFromACourse(
+      requestData.studentCode,
+      requestData.courseCode,
+    );
+  }
 }

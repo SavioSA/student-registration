@@ -72,4 +72,15 @@ export class StudentController {
       registerStudentInCourseDto,
     );
   }
+
+  @Delete('/:code/courses/:courseCode')
+  async removeStudentFromACourse(
+    @Param('code') studentCode: number,
+    @Param('courseCode') courseCode: number,
+  ) {
+    return await this.studentService.removeStudentFromACourse(
+      studentCode,
+      courseCode,
+    );
+  }
 }

@@ -116,7 +116,7 @@ export class StudentService {
          ${limit > 0 ? `LIMIT ${limit}` : ''};`,
       );
 
-      if (!courses || courses.length < 1) {
+      if (!courses) {
         throw new RpcException({
           status: 404,
           message: 'Courses not found.',
@@ -169,6 +169,40 @@ export class StudentService {
         studentCode,
         courseCode,
       });
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async removeFromACourse(studentCode: number, courseCode: number) {
+    try {
+      const studentExists = await this.studentRepository.findOne({
+        where: {
+          code: studentCode,
+        },
+      });
+      const courseExists = await this.courseRepository.findOne({
+        where: {
+          code: courseCode,
+        },
+      });
+      if (!studentExists) {
+        throw new RpcException({
+          status: 404,
+          message: 'Student not found.',
+        });
+      }
+      if (!courseExists) {
+        throw new RpcException({
+          status: 404,
+          message: 'Course not found.',
+        });
+      }
+      await this.courseStudentRepository.delete({
+        studentCode,
+        courseCode,
+      });
+      return { message: 'Student deleted from course successfully' };
     } catch (error) {
       throw new RpcException(error);
     }

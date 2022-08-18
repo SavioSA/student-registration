@@ -116,7 +116,7 @@ export class CourseService {
          ${limit > 0 ? `LIMIT ${limit}` : ''};`,
       );
 
-      if (!students || students.length < 1) {
+      if (!students) {
         throw new RpcException({
           status: 404,
           message: 'Students not found.',

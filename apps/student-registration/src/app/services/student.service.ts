@@ -39,6 +39,7 @@ export class StudentService {
   getStudent(code: number): Observable<StudentInterface> {
     return this.http.get<StudentInterface>(`${this.url}/${code}`).pipe(
       catchError((error) => {
+        this.router.navigate([`/`]);
         this.handleError(error.message)
         return throwError(() => error);
       })
@@ -63,8 +64,28 @@ export class StudentService {
     );
   }
 
+  registerStudentInACourse(studentCode: number, courseCode: number) {
+    return this.http.post<MessageInterface>(`${this.url}/${studentCode}/courses`, {
+      courseCode
+    }).pipe(
+      catchError((error) => {
+        this.handleError(error.message)
+        return throwError(() => error);
+      })
+    );
+  }
+
+  removeStudentFromACourse(studentCode: number, courseCode: number) {
+    return this.http.delete<MessageInterface>(`${this.url}/${studentCode}/courses/${courseCode}`, {
+    }).pipe(
+      catchError((error) => {
+        this.handleError(error.message)
+        return throwError(() => error);
+      })
+    );
+  }
+
   handleError(msg: string) {
-    this.router.navigate([`/`]);
     this._snackBar.open(msg, 'OK');
   }
 }

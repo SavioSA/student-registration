@@ -1,0 +1,12 @@
+  <div class="dialog-container">
+    <h4>
+     Adicionar aluno
+    </h4>
+    <form action="" [formGroup]="data.formData" (ngSubmit)="submit()">
+      <mat-form-field appearance="outline">
+        <mat-label>Código</mat-label>
+        <input formControlName="code" matInput (keypress)="isNumber($event)" placeholder="Código">
+      </mat-form-field>
+      <button [disabled]="!data.formData.valid" type="submit" mat-raised-button color="primary">Cadastrar</button>
+    </form>
+  </div>

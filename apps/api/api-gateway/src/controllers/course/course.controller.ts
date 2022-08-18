@@ -58,8 +58,6 @@ export class CourseController {
     @Query('limit') limit: number,
     @Query('page') page: number,
   ) {
-    console.log(limit);
-
     return await this.courseService.getAllCourseStudent(code, limit, page);
   }
 }

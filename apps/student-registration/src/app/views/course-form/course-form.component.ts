@@ -8,6 +8,8 @@ import { lastValueFrom } from 'rxjs';
 import { DialogConfirmationComponent } from '../../components/dialog-confirmation/dialog-confirmation.component';
 import StudentInterface from '../../interfaces/student.interface';
 import { CourseService } from '../../services/course.service';
+import { StudentService } from '../../services/student.service';
+import { AddStudentDialogComponent } from './components/add-student-dialog/add-student-dialog.component';
 
 @Component({
   selector: 'student-registration-course-form',
@@ -34,6 +36,14 @@ export class CourseFormComponent implements OnInit {
       }
     ]
   })
+  codeForm = this.fb.group({
+    code: [
+      '',
+      {
+        validators: [Validators.required]
+      }
+    ]
+  })
   constructor(
     private fb: FormBuilder,
     private courseService: CourseService,
@@ -41,6 +51,7 @@ export class CourseFormComponent implements OnInit {
     public activatedRoute: ActivatedRoute,
     private _snackBar: MatSnackBar,
     public dialog: MatDialog,
+    private studentService: StudentService,
   ) {}
 
   ngOnInit(): void {
@@ -102,7 +113,6 @@ export class CourseFormComponent implements OnInit {
     const query = this.courseService.getCourseStudents(this.courseCode as number, limit, page);
     const result = await lastValueFrom(query);
     this.students = result;
-    console.log(result);
   }
 
   openDeleteDialog(studentInformations: {
@@ -113,12 +123,15 @@ export class CourseFormComponent implements OnInit {
       width: '16rem',
       height: '184px',
       data: {
-        message: `Deseja realmente excluir o aluno ${studentInformations.name}?`,
+        message: `Deseja realmente remover o aluno ${studentInformations.name}?`,
       },
     });
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe(async (result) => {
       if (result.response) {
-        // this.deleteStudent(studentInformations.code);
+        const query = this.studentService.removeStudentFromACourse(studentInformations.code as number, this.courseCode as number);
+        await lastValueFrom(query)
+        this.ngOnInit();
+        this._snackBar.open("Aluno removido com sucesso.", "Ok")
       }
     });
   }
@@ -126,6 +139,26 @@ export class CourseFormComponent implements OnInit {
   changeIndex(pageEvent: PageEvent) {
     this.getCourseStudents(7, pageEvent.pageIndex + 1)
     this.page = pageEvent.pageIndex + 1
+  }
+
+  async openDialog() {
+    const dialogRef = this.dialog.open(AddStudentDialogComponent, {
+      width: '16rem',
+      height: '360px',
+      data: {
+        formData: this.codeForm
+      }
+    });
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result.validated) {
+        const query = this.studentService.registerStudentInACourse(
+          parseInt(this.codeForm.controls.code.value as string),
+          this.courseCode as number,
+        )
+        await lastValueFrom(query)
+        this.getCourseStudents(7, this.page);
+      }
+    });
   }
 
 }
