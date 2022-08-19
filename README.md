@@ -1,5 +1,10 @@
 
 
+To setup this project you just have:
+1. To clone this repository.
+2. To use .enx.example as .env.
+3. To run "docker-compose up --build" in the root directory.
+
 # StudentRegistration
 
 This project was generated using [Nx](https://nx.dev).
